@@ -1,4 +1,4 @@
-package com.detoeuf.test;
+package com.detoeuf.bootstrap;
 
 import lombok.Value;
 
