@@ -1,0 +1,67 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.2'
+        classpath "io.franzbecker:gradle-lombok:1.11"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.junit.platform.gradle.plugin'
+apply plugin: 'application'
+apply plugin: "io.franzbecker.gradle-lombok"
+
+group 'com.detoeuf'
+version '1.0-SNAPSHOT'
+sourceCompatibility = 9
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junit4Version = '4.12'
+    junitVintageVersion = '4.12.2'
+    junitPlatformVersion = '1.0.2'
+    junitJupiterVersion = '5.0.2'
+}
+
+mainClassName = "com.detoeuf.test.Application"
+
+dependencies {
+    compile 'io.vavr:vavr:0.9.1'
+
+    compile "org.slf4j:slf4j-api:1.7.25"
+    compile "ch.qos.logback:logback-core:1.2.3"
+    compile "ch.qos.logback:logback-classic:1.2.3"
+
+    testCompile 'org.assertj:assertj-core:3.8.0'
+    testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
+    testCompile("org.junit.jupiter:junit-jupiter-params:${junitJupiterVersion}")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
+}
+
+junitPlatform {
+    // platformVersion '1.0.2'
+    filters {
+        engines {
+            // include 'junit-jupiter', 'junit-vintage'
+            // exclude 'custom-engine'
+        }
+        tags {
+            // include 'fast'
+            exclude 'slow'
+        }
+        // includeClassNamePattern '.*Test'
+    }
+    // configurationParameter 'junit.jupiter.conditions.deactivate', '*'
+    // enableStandardTestTask true
+    // reportsDir file('build/test-results/junit-platform') // this is the default
+    logManager 'org.apache.logging.log4j.jul.LogManager'
+}
+
