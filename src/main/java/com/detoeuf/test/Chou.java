@@ -1,10 +1,11 @@
 package com.detoeuf.test;
 
-import lombok.Data;
+import lombok.Value;
 
-@Data
+@Value(staticConstructor = "of")
 public class Chou {
-    private String toto;
+
+    String toto;
 
     public String name() {
         return "romanesco";
